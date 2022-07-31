@@ -1,4 +1,4 @@
-const getToDos = (callback)=>{
+const getToDos = (resource,callback)=>{
 
     // Creates a new XMLHttpRequest object, which can be used for HTTP requests with API's etc..
     
@@ -9,7 +9,7 @@ const getToDos = (callback)=>{
     //  4 means the request is completed and ready to be used
     
     request.addEventListener("readystatechange",()=>{
-        console.log(request.readyState)
+        
         // .readyState 4 means request completed, status 200 means the data was retrieved successfully
         if (request.readyState === 4 && request.status === 200){
             // Converts the JSON from string format into Javascript Object
@@ -27,18 +27,21 @@ const getToDos = (callback)=>{
     // Sets the endpoint and type of request for the http request
     // In this case we want to GET data and the endpoint we're getting it from it jsonplaceholder
     
-    request.open("GET","todos.json")
+    request.open("GET",resource)
     // This sends the http request, activating it
     request.send()
     }
     
-    getToDos((err,data)=>{
-    
-        if (err){
-            console.log(err)
-        } else{
+
+    // Callback hell, avoid this with the use of promises
+    getToDos("todos/todos.json",(err,data)=>{
+        console.log(data)
+        getToDos("todos/mario.json",(err,data)=>{
             console.log(data)
-        }
-    
-    })
+            getToDos("todos/shaun.json",(err,data)=>{
+                console.log(data)
+        
+                })
+            })
+        })
     
