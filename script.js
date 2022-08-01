@@ -1,5 +1,6 @@
 const getToDos = (resource,callback)=>{
 
+    
     // Creates a new XMLHttpRequest object, which can be used for HTTP requests with API's etc..
     
     const request = new XMLHttpRequest();
@@ -34,14 +35,33 @@ const getToDos = (resource,callback)=>{
     
 
     // Callback hell, avoid this with the use of promises
-    getToDos("todos/todos.json",(err,data)=>{
-        console.log(data)
-        getToDos("todos/mario.json",(err,data)=>{
-            console.log(data)
-            getToDos("todos/shaun.json",(err,data)=>{
-                console.log(data)
+    // getToDos("todos/todos.json",(err,data)=>{
+    //     console.log(data)
+    //     getToDos("todos/mario.json",(err,data)=>{
+    //         console.log(data)
+    //         getToDos("todos/shaun.json",(err,data)=>{
+    //             console.log(data)
         
-                })
+    //             })
+    //         })
+    //     })
+
+    // Promise basics
+
+        const doSomething = () =>{
+
+            // Returns a promise, when resolve() is used it fires .then, when reject() is used
+            // Then .catch is fired
+            return new Promise((resolve,reject)=>{
+
+                resolve('Some data')
+                reject('some error')
+
             })
-        })
-    
+        }
+
+        doSomething().then((data)=>{
+            console.log(data)
+         }).catch((error)=>{
+            console.log(error)
+         })
