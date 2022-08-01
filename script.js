@@ -1,5 +1,6 @@
-const getToDos = (resource,callback)=>{
+const getToDos = (resource)=>{
 
+    return new Promise((resolve,reject)=>{
     
     // Creates a new XMLHttpRequest object, which can be used for HTTP requests with API's etc..
     
@@ -17,11 +18,11 @@ const getToDos = (resource,callback)=>{
             // JSON stands for Javascript object notation
             const data = JSON.parse(request.responseText)
             //logs the response of the request, in this case it's a JSON
-            callback(undefined,data)
+            resolve(data)
     
             // If the state indicates request completed, but the status isn't success, log an error
         } else if (request.readyState === 4){
-            callback("Request failed because of Error: " + request.status, undefined)
+            reject("Request failed because of Error: " + request.status, undefined)
         }
     })
     
@@ -31,8 +32,17 @@ const getToDos = (resource,callback)=>{
     request.open("GET",resource)
     // This sends the http request, activating it
     request.send()
+    })
+
     }
     
+    getToDos('todos/todos.json').then((data)=>{
+        console.log("Promise resolved:" ,data)
+    }).catch((error)=>{
+        console.log("Promise rejected:", error)
+    })
+
+
 
     // Callback hell, avoid this with the use of promises
     // getToDos("todos/todos.json",(err,data)=>{
