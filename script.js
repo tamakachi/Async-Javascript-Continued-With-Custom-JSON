@@ -36,9 +36,21 @@ const getToDos = (resource)=>{
 
     }
     
+// Promise chaining, use this to avoid callback hell
+// Inside the .then{} insert a return for the following get request and then simply add a .then at the end of that block
+// A promise will return and when it completes it will fire the second.then
+// You only need one .catch at the end to catch all errors
+
     getToDos('todos/todos.json').then((data)=>{
-        console.log("Promise resolved:" ,data)
-    }).catch((error)=>{
+        console.log("Promise 1 todos.json resolved:" ,data)
+        return getToDos('todos/shaun.json')
+    }).then((data)=>{
+        console.log("Promise 2 shaun.json resolved:",data)
+        return getToDos("todos/mario.json")
+    }).then((data)=>{
+        console.log("Promise 3 mario.json resolved:",data)
+    })
+    .catch((error)=>{
         console.log("Promise rejected:", error)
     })
 
